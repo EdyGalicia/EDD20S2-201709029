@@ -179,6 +179,8 @@ void CLONAR(){
 		cout<<"No hay estudiantes registrados"<<endl;
 	}
 	
+	insertar();
+	
 }
 
 
