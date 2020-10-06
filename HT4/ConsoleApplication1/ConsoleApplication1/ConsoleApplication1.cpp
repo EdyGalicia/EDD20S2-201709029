@@ -15,7 +15,7 @@ int main()
     arbol->insertar(8, arbolEspejo);
 
     arbol->generar();
-    arbolEspejo->generarEspejo();
+    arbolEspejo->generar2();
     delete arbol;
 
 }

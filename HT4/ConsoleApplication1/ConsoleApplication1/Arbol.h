@@ -16,6 +16,8 @@ public:
 	NodoAVL* getRaiz();
 	void setRaiz(NodoAVL* n);
 	void insertar(int valor, Arbol* espejo);
+	void generar();
+	void generar2();
 private:
 	NodoAVL* raiz;
 	NodoAVL* insertar(NodoAVL* raiz, int dato, bool& hc);
@@ -25,5 +27,7 @@ private:
 	NodoAVL* rotacionID(NodoAVL* n, NodoAVL* n1);
 	NodoAVL* rotacionDI(NodoAVL* n, NodoAVL* n1);
 	void Delete(NodoAVL* raiz);
+
+	void generar(stringstream* cadena, NodoAVL* padre, NodoAVL* actual, bool izquierda);
 
 };

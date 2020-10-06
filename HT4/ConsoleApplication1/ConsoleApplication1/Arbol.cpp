@@ -282,3 +282,56 @@ void Arbol::insertar(int valor, Arbol* espejo) {
 NodoAVL* Arbol::getRaiz() { return this->raiz; }
 void Arbol::setRaiz(NodoAVL* n) { this->raiz = n; }
 
+void Arbol::generar()
+{
+	stringstream cadena;
+	cadena << "digraph G{\n" << endl;
+	cadena << "node[shape=\"record\"];" << endl;
+	if (raiz != NULL) {
+		cadena << "node" << &(*this->raiz) << "[label = \"<f0>|<f1>" << this->raiz->getDato() << "factor:" << this->raiz->getFactor() << "|<f2>\"];\n" << endl;
+		this->generar(&cadena, this->raiz, this->getRaiz()->getIzquierda(), true);
+		this->generar(&cadena, this->raiz, this->getRaiz()->getDerecha(), false);
+	}
+	cadena << "}" << endl;
+	cout << cadena.str() << endl;
+	ofstream file("salida.dot");
+	file << cadena.str();
+	file.close();
+	system("dot -Tpng salida.dot -o salida.png");
+}
+
+void Arbol::generar2()
+{
+	stringstream cadena;
+	cadena << "digraph G{\n" << endl;
+	cadena << "node[shape=\"record\"];" << endl;
+	if (raiz != NULL) {
+		cadena << "node" << &(*this->raiz) << "[label = \"<f0>|<f1>" << this->raiz->getDato() << "factor:" << this->raiz->getFactor() << "|<f2>\"];\n" << endl;
+		this->generar(&cadena, this->raiz, this->getRaiz()->getIzquierda(), true);
+		this->generar(&cadena, this->raiz, this->getRaiz()->getDerecha(), false);
+	}
+	cadena << "}" << endl;
+	cout << cadena.str() << endl;
+	ofstream file("salida2.dot");
+	file << cadena.str();
+	file.close();
+	system("dot -Tpng salida2.dot -o salida2.png");
+}
+
+
+//GRAPHVIZ
+void Arbol::generar(stringstream* cadena, NodoAVL* padre, NodoAVL* actual, bool izquierda) {
+	if (actual != NULL)
+	{
+		*cadena << "node" << &(*actual) << "[label= \"<f0> | <f1>" << actual->getDato() << " factor:" << actual->getFactor() << " | <f2>\"];" << endl;
+		if (izquierda) {
+			*cadena << "node" << &(*padre) << ":f0-> node" << &(*actual) << ":f1;" << endl;
+		}
+		else
+		{
+			*cadena << "node" << &(*padre) << ":f2-> node" << &(*actual) << ":f1;" << endl;
+		}
+		generar(cadena, actual, actual->getIzquierda(), true);
+		generar(cadena, actual, actual->getDerecha(), false);
+	}
+}
